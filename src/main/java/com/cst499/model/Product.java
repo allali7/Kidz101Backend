@@ -2,9 +2,12 @@ package com.cst499.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 // map the model to the database
@@ -16,8 +19,33 @@ public class Product {
 	// define primary key for table 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long productId;
+//	
+	//
+		//
+			//
+	//the commented out section is what I tried easlier but gave errors 
 	
+//	
+	@ManyToOne
+	@JoinColumn(name="sellerId")
+	private Seller seller;
+//	@ManyToOne
+//	private Seller seller;
+//	
+	
+	
+	public Product(long productId, Seller seller, String pName, String department, String imageUrl, int price, int quantity) {
+		super();
+		this.productId = productId;
+		this.seller = seller;
+		this.pName = pName;
+		this.department = department;
+		this.imageUrl = imageUrl;
+		this.price = price;
+		this.quantity = quantity;
+	}
+
 	// column names for field in the database table
 	@Column(name = "p_name")
 	private String pName;
@@ -41,20 +69,29 @@ public class Product {
 	}
 	
 	
-	
-	public Product(String pName, String department, String imageUrl, int price, int quantity) {
-		super();
-		this.pName = pName;
-		this.department = department;
-		this.imageUrl = imageUrl;
-		this.price = price;
-		this.quantity = quantity;
+
+//	public Product(long productId, String pName, String department, String imageUrl, int price, int quantity) {
+//		super();
+//		this.productId = productId;
+//		this.pName = pName;
+//		this.department = department;
+//		this.imageUrl = imageUrl;
+//		this.price = price;
+//		this.quantity = quantity;
+//	}
+	public Seller getSeller() {
+		return seller;
 	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
 	public long  getId() {
-		return id;
+		return productId;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long productId) {
+		this.productId = productId;
 	}
 	public String getpName() {
 		return pName;

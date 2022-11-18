@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,10 +18,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.server.ResponseStatusException;
 
 import com.cst499.exception.ResourceNotFoundException;
 import com.cst499.model.Product;
+import com.cst499.model.Seller;
 import com.cst499.repository.ProductRepository;
+//import com.cst499.repository.SellerRepository;
 //
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -30,6 +36,11 @@ public class ProductController {
 	// inject product repo here
 	@Autowired
 	private ProductRepository productRepository;
+//	@Autowired
+//	private SellerRepository SellerRepository;
+	
+//	@GetMapping(/products/{)
+	
 	
 	// get all products
 	/// this rest api should return a list of all products 
@@ -45,19 +56,19 @@ public class ProductController {
 	}
 //	
 //	// get product by id rest api
-	@GetMapping("/products/{id}")
-	public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + id));
+	@GetMapping("/products/{productId}")
+	public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + productId));
 		return ResponseEntity.ok(product);
 	}
 //	
 //	// update employee rest api
 //	
-	@PutMapping("/products/{id}")
-	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails){
-		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with id :" + id));
+	@PutMapping("/products/{productId}")
+	public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody Product productDetails){
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with id :" + productId));
 		
 		product.setpName(productDetails.getpName());
 		product.setDepartment(productDetails.getDepartment());
@@ -71,16 +82,28 @@ public class ProductController {
 	}
 //	
 //	// delete employee rest api
-	@DeleteMapping("/products/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteProduct(@PathVariable Long id){
-		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + id));
+	@DeleteMapping("/products/{productId}")
+	public ResponseEntity<Map<String, Boolean>> deleteProduct(@PathVariable Long productId){
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + productId));
 		
 		productRepository.delete(product);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
+	
+	//getProductsBySellerId
+	@GetMapping("/products/{seller}")
+	public ResponseEntity<List<Product>> getProductBySellerId(@PathVariable Seller seller) {
+		
+		Long sellerId = seller.getSellerId();
+		List<Product> product = (List<Product>) productRepository.findProductBySellerId(sellerId);
+//				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this sellerId :" + sellerId));
+		return ResponseEntity.ok(product);
+	}
+	
+//	
 	
 	
 //}

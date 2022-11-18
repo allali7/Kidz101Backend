@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
@@ -35,6 +38,10 @@ public class Seller {
 //		@OneToMany(cascade=CascadeType.ALL, mappedBy="seller")
 //		private List<Product> products;
 		
+	    @OneToMany(mappedBy = "seller")
+	    @JsonIgnore
+//	    @JsonBackReference
+	    List<Product> products;
 //		
 		// column names for field in the database table
 		@Column(name = "s_first_name")
@@ -53,19 +60,30 @@ public class Seller {
 		// default constructor needed bc of hibernate creating prxys 
 		public Seller(){
 			
-		}
+  		}
+//
+////List<Product> products, isert if needed
+//		public Seller(long sellerId, String sFirstName, String sLastName, String email,
+//				String password) {
+//			super();
+//			this.sellerId = sellerId;
+//			this.sFirstName = sFirstName;
+//			this.sLastName = sLastName;
+//			this.email = email;
+//			this.password = password;
+//		}
 
-//List<Product> products, isert if needed
-		public Seller(long sellerId, String sFirstName, String sLastName, String email,
-				String password) {
-			super();
-			this.sellerId = sellerId;
-			this.sFirstName = sFirstName;
-			this.sLastName = sLastName;
-			this.email = email;
-			this.password = password;
-		}
 
+		public Seller(long sellerId, List<Product> products, String sFirstName, String sLastName, String email,
+		String password) {
+	super();
+	this.sellerId = sellerId;
+	this.products = products;
+	this.sFirstName = sFirstName;
+	this.sLastName = sLastName;
+	this.email = email;
+	this.password = password;
+}
 
 		public long getSellerId() {
 			return sellerId;
@@ -77,14 +95,14 @@ public class Seller {
 		}
 
 
-//		public List<Product> getProducts() {
-//			return products;
-//		}
-//
-//
-//		public void setProducts(List<Product> products) {
-//			this.products = products;
-//		}
+		public List<Product> getProducts() {
+			return products;
+		}
+
+
+		public void setProducts(List<Product> products) {
+			this.products = products;
+		}
 
 
 		public String getsFirstName() {
