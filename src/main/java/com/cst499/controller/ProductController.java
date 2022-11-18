@@ -94,7 +94,8 @@ public class ProductController {
 	}
 	
 	//getProductsBySellerId
-	@GetMapping("/products/{seller}")
+//	@GetMapping("/products/{seller}")
+	@GetMapping("/products/seller/{seller}")
 	public ResponseEntity<List<Product>> getProductBySellerId(@PathVariable Seller seller) {
 		
 		Long sellerId = seller.getSellerId();
