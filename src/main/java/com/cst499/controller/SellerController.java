@@ -65,11 +65,13 @@ public class SellerController {
 					.orElseThrow(() -> new ResourceNotFoundException("Seller does not exist with id :" + sellerId));
 			
 			seller.setSellerId(sellerDetails.getSellerId());
-			seller.setsLastName(sellerDetails.getsLastName());
-			seller.setEmail(sellerDetails.getEmail());
+			//seller.setsLastName(sellerDetails.getsLastName());
+			//seller.setEmail(sellerDetails.getEmail());
 			seller.setProducts(sellerDetails.getProducts());
-			seller.setsFirstName(sellerDetails.getsFirstName());
+			//seller.setsFirstName(sellerDetails.getsFirstName());
 			seller.setPassword(sellerDetails.getPassword());
+			seller.setsId(sellerDetails.getsId());
+
 			
 			
 			Seller updatedSeller = sellerRepository.save(seller);

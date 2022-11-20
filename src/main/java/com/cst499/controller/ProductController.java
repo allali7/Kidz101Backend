@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.server.ResponseStatusException;
 
 import com.cst499.exception.ResourceNotFoundException;
 import com.cst499.model.Product;
-import com.cst499.model.Seller;
+//import com.cst499.model.Seller;
 import com.cst499.repository.ProductRepository;
 //import com.cst499.repository.SellerRepository;
 //
@@ -93,19 +94,34 @@ public class ProductController {
 		return ResponseEntity.ok(response);
 	}
 	
-	//getProductsBySellerId
-//	@GetMapping("/products/{seller}")
-	@GetMapping("/products/seller/{seller}")
-	public ResponseEntity<List<Product>> getProductBySellerId(@PathVariable Seller seller) {
-		
-		Long sellerId = seller.getSellerId();
-		List<Product> product = (List<Product>) productRepository.findProductBySellerId(sellerId);
-//				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this sellerId :" + sellerId));
-		return ResponseEntity.ok(product);
+//	//getProductsBySellerId
+//	@GetMapping("/products/{sId}")
+//	public ResponseEntity<List<Product>> getProductBySellerId(@RequestParam long sId){
+//	//(@PathVariable long sId) {
+//		//@RequestParam("sId") long sId
+//		//Long sellerId = seller.getSellerId();
+//		System.out.println(sId);
+//		List<Product> product = (List<Product>) productRepository.findProductBySellerId(sId);
+////				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this sellerId :" + sId));
+//		return ResponseEntity.ok(product);
+//	}
+	
+	// @RequestParam("year") int year
+	
+	@GetMapping("/products/searchsId")
+	public ResponseEntity<List<Product>> searchsIdProductsByQuery(@RequestParam("query") String query){
+	List<Product> products = productRepository.searchsIdByQuery(query);
+	return ResponseEntity.ok(products);
 	}
 	
+	@GetMapping("/products/search")
+	public ResponseEntity<List<Product>> searchProductsByQuery(@RequestParam("query") String query){
+	List<Product> products = productRepository.searchByQuery(query);
+	return ResponseEntity.ok(products);
+	}
 //	
 	
 	
 //}
 }
+

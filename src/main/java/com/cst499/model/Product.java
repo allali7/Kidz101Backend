@@ -2,12 +2,9 @@ package com.cst499.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 // map the model to the database
@@ -19,33 +16,8 @@ public class Product {
 	// define primary key for table 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long productId;
-//	
-	//
-		//
-			//
-	//the commented out section is what I tried easlier but gave errors 
+	private long id;
 	
-//	
-	@ManyToOne
-	@JoinColumn(name="sellerId")
-	private Seller seller;
-//	@ManyToOne
-//	private Seller seller;
-//	
-	
-	
-	public Product(long productId, Seller seller, String pName, String department, String imageUrl, int price, int quantity) {
-		super();
-		this.productId = productId;
-		this.seller = seller;
-		this.pName = pName;
-		this.department = department;
-		this.imageUrl = imageUrl;
-		this.price = price;
-		this.quantity = quantity;
-	}
-
 	// column names for field in the database table
 	@Column(name = "p_name")
 	private String pName;
@@ -62,6 +34,9 @@ public class Product {
 	@Column(name = "quantity")
 	private int quantity;
 	
+	@Column(name = "sId")
+	private String sId;
+	
 	
 	// default constructor needed bc of hibernate creating prxys 
 	public Product(){
@@ -69,29 +44,21 @@ public class Product {
 	}
 	
 	
-
-//	public Product(long productId, String pName, String department, String imageUrl, int price, int quantity) {
-//		super();
-//		this.productId = productId;
-//		this.pName = pName;
-//		this.department = department;
-//		this.imageUrl = imageUrl;
-//		this.price = price;
-//		this.quantity = quantity;
-//	}
-	public Seller getSeller() {
-		return seller;
+	
+	public Product(String pName, String department, String imageUrl, int price, int quantity, String sId) {
+		super();
+		this.pName = pName;
+		this.department = department;
+		this.imageUrl = imageUrl;
+		this.price = price;
+		this.quantity = quantity;
+		this.sId= sId;
 	}
-
-	public void setSeller(Seller seller) {
-		this.seller = seller;
-	}
-
 	public long  getId() {
-		return productId;
+		return id;
 	}
-	public void setId(long productId) {
-		this.productId = productId;
+	public void setId(long id) {
+		this.id = id;
 	}
 	public String getpName() {
 		return pName;
@@ -122,6 +89,18 @@ public class Product {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+
+
+	public String getsId() {
+		return sId;
+	}
+
+
+
+	public void setsId(String sId) {
+		this.sId = sId;
 	} 
 
 }
