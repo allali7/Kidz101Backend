@@ -67,7 +67,7 @@ public class SellerController {
 			seller.setSellerId(sellerDetails.getSellerId());
 			//seller.setsLastName(sellerDetails.getsLastName());
 			//seller.setEmail(sellerDetails.getEmail());
-			seller.setProducts(sellerDetails.getProducts());
+			//seller.setProducts(sellerDetails.getProducts());
 			//seller.setsFirstName(sellerDetails.getsFirstName());
 			seller.setPassword(sellerDetails.getPassword());
 			seller.setsId(sellerDetails.getsId());
